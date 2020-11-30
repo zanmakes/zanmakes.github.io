@@ -12,7 +12,8 @@
 			<h2>for Christina Faro</h2>
 		</header>
 		<ol>
-			<li><h3>Creating the User Entity</h3>
+			<li>
+				<h3>Creating the User Entity</h3>
 				<p>This entity is the most important one because others will depend on this a lot. It's a <strong>Strong Entity</strong> because it doesn't need another entity to depend on it.</p>
 
 				<h4>Attributes</h4>
@@ -26,13 +27,16 @@
 
 				<h4>Relationships</h4>
 				<ul>
-					<li><strong>Enrollments</strong> - A user that's a student can enroll in a course. <strong>Many to Many</strong>.</li>
-					<li><strong>Student Information</strong> - A user that's a student has data here exclusive to a student. <strong>One to One</strong></li>
+					<li><strong>Enrollments</strong> - A user that's a student can enroll in a course. <strong>Zero to Many</strong>.</li>
+					<li><strong>Course</strong> - Determines whether or not an instructor has a course they are managing. <strong><em>Zero to One</em></strong>.</li>
+					<li><strong>Student Information</strong> - A user that's a student has data here exclusive to a student. <strong>Zero to One</strong></li>
 					<li><strong>Assignment</strong> - An instructor of a course can <em>create, read update, and delete</em> a course's assignment. <strong>One to Many</strong>.</li>
 					<li><strong>Assignment Submissions</strong> - A student of a course can submit a course's assignment. <strong>Many to Many</strong>.</li>
 				</ul>
 			</li>
-			<li><h3>Creating the Student Information Entity</h3>
+			<li>
+				<h3>Creating the Student Information Entity</h3>
+				
 				<p>This distiguishes a student and instructor from the user. If the user does not have a relationship here, it means they are an instructor, otherwise, they are a student. This is a <strong>Weak Entity</strong> because this Entity's existense depends on the <em>User</em> Entity.</p>
 				
 				<h4>Attributes</h4>
@@ -49,9 +53,112 @@
 
 				<h4>Relationships</h4>
 				<ul>
-					<li><strong>User</strong> - information exclusive to students. <strong><em>One to One</em></strong>.</li>
+					<li><strong>User</strong> - information exclusive to students. <strong><em>Zero to One</em></strong>.</li>
 				</ul>
 			</li>
+			<li>
+				<h3>Creating the Course Entity</h3>
+
+				<p>The Courses that Users can <em>create, read, update, and delete</em>. This is a <strong>Weak Entity</strong> because this Entity's existense depends on the <em>User</em> Entity.</p>
+
+				<p>It could have been a <em>Strong Entity</em> but that would have made the ER diagram more complicated.</p>
+				
+				<h4>Attributes</h4>
+				<dl>
+					<dt class="inline-code">id</dt>
+					<dd>Uniquely identifies entity.</dd>
+
+					<dt class="inline-code">title</dt>
+					<dd>Name of the course.</dd>
+
+					<dt>instructor_id</dt>
+					<dd>Refers to the instructor responsible of managing the course.</dd>
+				</dl>
+
+				<h4>Relationships</h4>
+				<ul>
+					<li><strong>User</strong> - links to instructor responsible for the management of course. For simplicity, it's a <strong><em>One to One</em></strong> relationship.</li>
+					<li><strong>Enrollment</strong> - links to student that enrolled in a course to determine whether or not the assignment submission is applicable to them. For simplicity, it's a <strong><em>One to One</em></strong> relationship.</li>
+				</ul>
+			</li>
+			<li>
+				<h3>Creating the Enrollments Entity</h3>
+				
+				<p>Lists students enrolled in a course. This is a <strong>Weak Entity</strong> because this Entity's existense depends on the <em>User, and Course</em> Entities.</p>
+				
+				<h4>Attributes</h4>
+				<dl>
+					<dt class="inline-code">id</dt>
+					<dd>Uniquely identifies entity.</dd>
+
+					<dt class="inline-code">student_id</dt>
+					<dd>Identifies which user is a student.</dd>
+
+					<dt>course_id</dt>
+					<dd>Student's final grade. It's a <strong><em>Multivalued key</em></strong> because a student can be enrolled in multiple courses.</dd>
+				</dl>
+
+				<h4>Relationships</h4>
+				<ul>
+					<li><strong>User</strong> - information exclusive to students. <strong><em>One to One</em></strong>.</li>
+					<li><strong>Course</strong> - Identifies what course the student is enrolled in. <strong><em> Zero to Many</em></strong>.</li>
+				</ul>
+			</li>
+			<li>
+				<h3>Creating the Assignments Entity</h3>
+				
+				<p>Management of Assignments. This is a <strong>Weak Entity</strong> because this Entity's existense depends on the <em>User, and Course</em> Entities.</p>
+				
+				<h4>Attributes</h4>
+				<dl>
+					<dt class="inline-code">id</dt>
+					<dd>Uniquely identifies entity.</dd>
+
+					<dt class="inline-code">assignment_title</dt>
+					<dd>Name of the assignment.</dd>
+
+					<dt>course_id</dt>
+					<dd>The course this assignment is from.</dd>
+				</dl>
+
+				<h4>Relationships</h4>
+				<ul>
+					<li><strong>User</strong> - information exclusive to students. <strong><em>One to One</em></strong>.</li>
+					<li><strong>Course</strong> - Identifies what course the student is enrolled in. <strong><em> Many to Many</em></strong>.</li>
+					<li><strong>Assignment Submission</strong> - Gets information of student's submission <strong><em> Zero to Many</em></strong>.</li>
+				</ul>
+			</li>
+			<li>
+				<h3>Creating the Assignment Submissions Entity</h3>
+				
+				<p>Management of Assignments' Submissions. This is a <strong>Weak Entity</strong> because this Entity's existense depends on the <em>User, Course, and Assignment</em> Entities.</p>
+				
+				<h4>Attributes</h4>
+				<dl>
+					<dt class="inline-code">id</dt>
+					<dd>Uniquely identifies entity.</dd>
+
+					<dt class="inline-code">course_id</dt>
+					<dd>Identifies which course this assignment is from.</dd>
+
+					<dt class="inline-code">assignment_id</dt>
+					<dd>Identifies the assignment.</dd>
+
+					<dt class="inline-code">student_id</dt>
+					<dd>Identifies the student that submitted the assignment.</dd>
+
+					<dt>file_location</dt>
+					<dd>The file to submit.</dd>
+				</dl>
+
+				<h4>Relationships</h4>
+				<ul>
+					<li><strong>User</strong> - information exclusive to students. <strong><em>One to One</em></strong>.</li>
+					<li><strong>Course</strong> - Identifies what course the student is enrolled in. <strong><em> Many to Many</em></strong>.</li>
+					<li><strong>Assignment</strong> - Identifies what assignment the student is submitting in. <strong><em>One to Many</em></strong>.</li>
+				</ul>
+			</li>
+			
 
 		</ol>
 	</body>
