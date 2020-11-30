@@ -1,0 +1,11 @@
+body {
+	margin: auto;
+	width: 50%;
+}
+.inline-code {
+	font-family: consolas, monospace;
+}		
+
+header > * {
+	text-align: center;
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Job Explanation for Christina Faro</title>
+		<link rel="stylesheet" type="text/css" href="style.css">
+	</head>
+	<body>
+		<header>
+			<h1>Job Explanation</h1>
+			<h2>for Christina Faro</h2>
+		</header>
+		<ol>
+			<li><h3>Creating the User Entity</h3>
+				<p>This entity is the most important one because others will depend on this a lot. It's a <strong>Strong Entity</strong> because it doesn't need another entity to depend on it.</p>
+
+				<h4>Attributes</h4>
+				<dl>
+					<dt class="inline-code">id</dt>
+					<dd>Uniquely identifies entity.</dd>
+
+					<dt class="inline-code">full_name</dt>
+					<dd>Uniquely identifies entity. It's a <em>multivalued attribute</em> because it can be split into two more attributes -- <span class="inline-code">first_name</span> and the <span class="inline-code">last_name</span> attributes.</dd>
+				</dl>
+
+				<h4>Relationships</h4>
+				<ul>
+					<li><strong>Role</strong> - A user can either be a <em>Student</em> or an <em>Instructor</em>. <strong>One to One</strong>.</li>
+					<li><strong>Enrollments</strong> - A user that's a student can enroll in a course. <strong>Many to Many</strong>.</li>
+					<li><strong>Student Information</strong> - A user that's a student has data here exclusive to a student. <strong>One to One</strong></li>
+					<li><strong>Assignment</strong> - An instructor of a course can <em>create, read update, and delete</em> a course's assignment. <strong>One to Many</strong>.</li>
+					<li><strong>Assignment Submissions</strong> - A student of a course can submit a course's assignment. <strong>Many to Many</strong>.</li>
+				</ul>
+			</li>
+
+		</ol>
+	</body>
+</html>
